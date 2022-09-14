@@ -15,11 +15,32 @@ function HomePage(props) {
   );
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//   const response = await getmeetupsCollection();
+//   const meetupsCollection = response.collection;
+//   const meetups = await meetupsCollection.find().toArray();
+
+//   response.client.close();
+
+//   const meetupList = meetups.map((meetup) => ({
+//     id: meetup._id.toString(),
+//     title: meetup.title,
+//     image: meetup.image,
+//     address: meetup.address,
+//   }));
+
+//   return {
+//     props: {
+//       meetups: meetupList,
+//     },
+//     revalidate: 1,
+//   };
+// }
+
+export async function getServerSideProps(context) {
   const response = await getmeetupsCollection();
   const meetupsCollection = response.collection;
   const meetups = await meetupsCollection.find().toArray();
-
   response.client.close();
 
   const meetupList = meetups.map((meetup) => ({
@@ -33,7 +54,6 @@ export async function getStaticProps() {
     props: {
       meetups: meetupList,
     },
-    revalidate: 1,
   };
 }
 
